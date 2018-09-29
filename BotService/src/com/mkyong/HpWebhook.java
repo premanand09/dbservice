@@ -51,14 +51,20 @@ public class HpWebhook {
 		{
 		
 		String pincode = request.getJSONObject("result").getJSONArray("contexts").getJSONObject(0).getJSONObject("parameters").getString("pincode");
+		String education = request.getJSONObject("result").getJSONArray("contexts").getJSONObject(0).getJSONObject("parameters").getString("education");
+		String jobtype = request.getJSONObject("result").getJSONArray("contexts").getJSONObject(0).getJSONObject("parameters").getString("jobtype");
+		
 		System.out.println(pincode);
+		System.out.println(education);
+		System.out.println(jobtype);
+		
 		DbOps dbQuery = new DbOps();
 		//System.out.println(request.getResult().getParameters().getShipmentid());
 		//pincode = "431206";
-		List<TraingCenterPojo> listTrainings  = dbQuery.getCenters(pincode);
+		List<TraingCenterPojo> listTrainings  = dbQuery.getCenters(pincode, education, jobtype);
 		
 				
-		if(listTrainings!=null) {
+		if(listTrainings.size()>0) {
 		
 		JsonResponseDialogueFlow response = new JsonResponseDialogueFlow();
 		List<Messages> listOfMessages = new ArrayList<Messages>();

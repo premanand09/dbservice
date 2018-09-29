@@ -33,7 +33,7 @@ public class DbOps {
 		return con;
 	}
 
-	public List<TraingCenterPojo> getCenters(String Pincode) {
+	public List<TraingCenterPojo> getCenters(String Pincode,String education,String jobtype) {
 		
 		List<TraingCenterPojo> listTraingCenterPojo = new ArrayList<TraingCenterPojo>();
 		
@@ -41,14 +41,15 @@ public class DbOps {
 			Connection con = getCon();
 			Statement stmt = con.createStatement();
 			
-			ResultSet rs = stmt.executeQuery("SELECT TrainingCenterName FROM hp.`nsdc-training-center-list` where Pincode = '"+Pincode+"'");
+			
+			ResultSet rs = stmt.executeQuery("SELECT `Training Center Name` FROM hp.`nsdc-training-center-list` where Sectors like '%"+jobtype+"%' and Pincode like '"+Pincode+"' and qualification like '"+education+"'");
 			
 			System.out.println("resultset");
 			
 			while (rs.next()) {
 			TraingCenterPojo traingCenterPojoloop = new TraingCenterPojo();
-			System.out.println("training center : "+rs.getString("TrainingCenterName"));
-			traingCenterPojoloop.setCenters(rs.getString("TrainingCenterName"));
+			System.out.println("training center : "+rs.getString("Training Center Name"));
+			traingCenterPojoloop.setCenters(rs.getString("Training Center Name"));
 			listTraingCenterPojo.add(traingCenterPojoloop);
 			}
 			
